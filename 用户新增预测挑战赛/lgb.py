@@ -3,7 +3,7 @@ import pandas as pd
 from sklearn.metrics import f1_score
 import lightgbm as lgb
 from sklearn.model_selection import train_test_split
-
+from lightgbm import LGBMClassifier
 
 def read_data():
     path = 'D:\Code\Python\PythonLearning\用户新增预测挑战赛\input/'
@@ -16,21 +16,12 @@ def read_data():
 def model_train(X, y):
     # 设置XGBoost参数
     params = {
-        'task': 'train',
-        'boosting_type': 'gbdt',
-        'objective': 'regression',
-        'metric': {'auc'},
-        'num_leaves': 25,
-        'learning_rate': 0.008,
-        'feature_fraction': 0.9,
-        'bagging_fraction': 0.8,
-        'bagging_freq': 5,
-        'verbose': 2
+        'learning_rate': 0.01,
     }
 
     dtrain = lgb.Dataset(X, label=y)
     #  训练模型
-    model = lgb.train(params, dtrain, num_boost_round=2000)
+    model = lgb.train(params, dtrain)
 
     return model
 
