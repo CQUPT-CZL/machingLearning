@@ -19,7 +19,7 @@ def model_train(X, y):
 
     dtrain = xgb.DMatrix(X, label=y)
 
-    model = xgb.train(params, dtrain, num_boost_round=500)
+    model = xgb.train(params, dtrain, num_boost_round=100)
 
     return model
 
@@ -43,7 +43,7 @@ if __name__ == '__main__':
 
     pd.DataFrame({
         'uuid': test['uuid'],
-        'target': model.predict(xgb.DMatrix(test.drop(['udmap', 'common_ts', 'common_ts_datatime'], axis=1)))
+        'target': np.round(model.predict(xgb.DMatrix(test.drop(['udmap', 'common_ts', 'common_ts_datatime'], axis=1))))
     }).to_csv('submit.csv', index=None)
 
 
